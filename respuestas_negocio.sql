@@ -80,9 +80,9 @@ BEGIN
 END
 
 
---We can then execute the stored procedure PopulateItemStatusTable to populate the ItemStatus table 
+--We can then execute the stored procedure 'PopulateItemStatusTable' to populate the 'ItemStatus' table 
 --with the latest price and status of the items at the end of the day. 
---Please note that this script assumes the presence of a Date column in the Item table to determine the
+--Please note that this script assumes the presence of a 'Date' column in the Item table to determine the
 --latest state of each item based on the maximum date.
 
 --It is important also to adjust the data types and table/column names as per specific database schema.
