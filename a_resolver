@@ -9,19 +9,19 @@ JOIN (
   WHERE MONTH(fecha) = 1 AND YEAR(fecha) = 2020
   GROUP BY customer_id
   HAVING COUNT(*) > 1500
-) AS sales ON c.id = sales.customer_id
+) AS sales ON c.customer_id = sales.customer_id
 WHERE DATE_FORMAT(c.fecha_nacimiento, '%m-%d') = DATE_FORMAT(CURRENT_DATE, '%m-%d');
 
 
 --Pregunta 2:
 SELECT 
-    MONTH(o.fecha) AS month,
-    YEAR(o.fecha) AS year,
-    c.primer_nombre,
-    c.apellido,
-    COUNT(o.id) AS cantidad_ventas,
-    SUM(od.cantidad) AS cantidad_productos_vendidos,
-    SUM(od.cantidad * od.precio_unitario) AS monto_total_transaccionado
+    MONTH(o.date) AS month,
+    YEAR(o.date) AS year,
+    c.first_name,
+    c.surname,
+    COUNT(o.id) AS sales_quantity,
+    SUM(od.cantidad) AS sold_product_quantity,
+    SUM(od.cantidad * od.precio_unitario) AS total_amount_transactioned
 FROM 
     Orders o
 JOIN 
@@ -34,9 +34,9 @@ WHERE
     c.descripcion = 'Cellphones' AND
     YEAR(o.fecha) = 2020
 GROUP BY 
-    YEAR(o.fecha), MONTH(o.fecha), c.primer_nombre, c.apellido
+    YEAR(o.date), MONTH(o.date), c.first_name, c.surname
 HAVING 
-    ROW_NUMBER() OVER (PARTITION BY YEAR(o.fecha), MONTH(o.fecha) ORDER BY SUM(od.cantidad * od.precio_unitario) DESC) <= 5;
+    ROW_NUMBER() OVER (PARTITION BY YEAR(o.date), MONTH(o.date) ORDER BY SUM(od.quantity * od.unit_price) DESC) <= 5;
 
 
 --Pregunta 3:
