@@ -40,3 +40,50 @@ HAVING
 
 
 --Pregunta 3:
+CREATE PROCEDURE PopulateItemStatusTable
+AS
+BEGIN
+    -- Create a temporary table to store the latest state of each item
+    CREATE TABLE #LatestItemState
+    (
+        Item_ID INT PRIMARY KEY,
+        Price DECIMAL(10,2),
+        Status VARCHAR(50)
+    )
+
+    -- Insert the latest state of each item into the temporary table
+    INSERT INTO #LatestItemState (ItemID, Price, Status)
+    SELECT i.Item_ID, i.Price, i.Status
+    FROM Item i
+    INNER JOIN
+    (
+        SELECT Item_ID, MAX(Date) AS LatestDate
+        FROM Item
+        GROUP BY Item_ID
+    ) t ON i.Item_ID = t.Item_ID AND i.Date = t.LatestDate
+
+    -- Create the final table to store the end-of-day state of items
+    CREATE TABLE ItemStatus
+    (
+        Item_ID INT PRIMARY KEY,
+        Price DECIMAL(10,2),
+        Status VARCHAR(50)
+    )
+
+    -- Insert the data from the temporary table into the final table
+    INSERT INTO Item_Status (ItemID, Price, Status)
+    SELECT Item_ID, Price, Status
+    FROM #LatestItemState
+
+    -- Drop the temporary table
+    DROP TABLE #LatestItemState
+END
+
+
+--We can then execute the stored procedure PopulateItemStatusTable to populate the ItemStatus table 
+--with the latest price and status of the items at the end of the day. 
+--Please note that this script assumes the presence of a Date column in the Item table to determine the
+--latest state of each item based on the maximum date.
+
+--It is important also to adjust the data types and table/column names as per specific database schema.
+
