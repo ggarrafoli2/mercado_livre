@@ -1,0 +1,51 @@
+CREATE TABLE Customer (
+  customer_id INT PRIMARY KEY,
+  email VARCHAR(255) UNIQUE NOT NULL,
+  primeiro_nome VARCHAR(255) NOT NULL,
+  sobrenome VARCHAR(255) NOT NULL,
+  sexo VARCHAR(10),
+  endereco VARCHAR(255),
+  data_nascimento DATE,
+  telefone VARCHAR(20),
+  -- Outros atributos relevantes
+  -- ...
+);
+
+
+CREATE TABLE Item (
+  item_id INT PRIMARY KEY,
+  nome VARCHAR(255) NOT NULL,
+  categoria_id INT NOT NULL,
+  estado ENUM('ativo', 'inativo') DEFAULT 'ativo',
+  data_retirada DATE,
+  -- Outros atributos relevantes
+  -- ...
+  FOREIGN KEY (categoria_id) REFERENCES Category(id)
+);
+
+
+CREATE TABLE Category (
+  category_id INT PRIMARY KEY,
+  descricao VARCHAR(255) NOT NULL,
+  path VARCHAR(255) NOT NULL,
+  -- Outros atributos relevantes
+  -- ...
+);
+
+
+
+CREATE TABLE Order (
+  order_id INT PRIMARY KEY,
+  customer_id INT NOT NULL,
+  item_id INT NOT NULL,
+  quantidade INT NOT NULL,
+  data TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  -- Outros atributos relevantes
+  -- ...
+  FOREIGN KEY (customer_id) REFERENCES Customer(id),
+  FOREIGN KEY (item_id) REFERENCES Item(id)
+);
+
+
+  
+  
