@@ -37,5 +37,6 @@ if __name__ == "__main__":
       #df=json_normalize(produto["id"])
       df=pd.DataFrame([produto])
       df_=pd.concat([df_,df])
-  print(df_)    
-  print(df_.columns)
+  #print(df_)    
+  #print(df_.columns)
+  df_.to_csv("Servicio_Publico.csv")
