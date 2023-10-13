@@ -5,7 +5,7 @@ from pandas import json_normalize
 
 
 
-prods = ['chromecast','apple tv','alexa']
+prods = ['chromecast','apple tv','alexa','google home']
 def get_chrom(prod):
 #"""
 #Retorna uma lista de chromecast do Mercado Livre.
